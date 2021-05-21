@@ -4,7 +4,6 @@ export default class LeftNavigation {
 
 private menuList = Selector('sidebar_15mo');
 
-
 private async findLeftElemetToClick(title: string){
     const allChildElements = await this.menuList.find('li');
     const allChildElementsCount = await allChildElements.count;
@@ -42,11 +41,4 @@ async toggleByTitle(title: string){
      return t
      .expect(currentElementsTexts).eql(elTexts)
         }
-
-    // async verifyList(title){
-    //     const currentElement = await Selector('a.menu__link').withText(title).parent().find('ul');
-    //     const currentElement1 = await currentElement.textContent;
-    //   console.log('--------------------------')
-    //   console.log(currentElement1)
-    //     }
 }

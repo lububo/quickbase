@@ -10,7 +10,7 @@ const leftNavigation = new LeftNavigation();
 const ProtocolList = [
     'WebDriver Protocol','Appium','Mobile JSON Wire Protocol','Chromium',
     'Sauce Labs','Selenium Standalone','JSON Wire Protocol'
-];
+    ];
 
 fixture `Quickbase Demo`
 .page('http://webdriver.io')

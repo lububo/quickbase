@@ -5,6 +5,7 @@ export const verifyUrl = async (urlText) => {
     return t
     .expect(currentUrl).contains(urlText)
 }
+
 export const verifyPageTitle = (headerText: string) =>{
     const currentPageTitle = Selector('article>header>h1').textContent
     return t

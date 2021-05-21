@@ -81,19 +81,6 @@ export default class Search{
                 .expect(this.noResultsPage.child('p.DocSearch-Help').textContent).eql(`Believe this query should return results? Let us know.`)   
     }
 
-    // this.input = Selector('#docsearch-input')
-    // this.searchList = Selector('#docsearch-list')
-    // this.favourite = Selector('.DocSearch-Hit-action-button[title="Save this search"]')
-    // this.deleteFromRecent = Selector('.DocSearch-Hit-action-button[title="Remove this search from history"]')
-    // this.deleteFromFavouritea = Selector('.DocSearch-Hit-action-button[title="Remove this search from favorites"]')
-    // this.favouritesSearchList = Selector('.DocSearch-Hit-source').withExactText('Favourites').nextSibling('#docsearch-list')
-    // this.recentSearchList = Selector('.DocSearch-Hit-source').withExactText('Recent').nextSibling('#docsearch-list')
-    // this.header = Selector('.DocSearch-SearchBar')
-    // this.body = Selector('.DocSearch-StartScreen')
-    // this.footer = Selector('.DocSearch-Footer')
-    // this.footerCommands = this.footer.child('ul.DocSearch-Commands');
-    // this.clearSearchInput = Selector('.DocSearch-Reset')
-    // this.noResultsPage = Selector('.DocSearch-NoResults')
     private findHitByName(hitName){
         return this.searchList.find('.DocSearch-Hit-title').withExactText(hitName).parent().parent()
 }
@@ -133,6 +120,4 @@ export default class Search{
             t.click(selector)
         }        
     }
-
-
 }

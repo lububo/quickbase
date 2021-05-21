@@ -13,6 +13,4 @@ export default class Header{
         this.navBarBlog = Selector('.navbar__item').withExactText('Blog')
         this.search = Selector('.DocSearch-Button-Placeholder');
     }
-
-
 }
