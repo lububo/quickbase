@@ -1,0 +1,8 @@
+{
+    "reporter": "list",
+    "screenshots": {
+        "path": "reports/screenshots/",
+        "takeOnFails": true
+    },
+    "speed": 0.7
+}
