@@ -3,6 +3,7 @@ import Search from '../pages/Search';
 import {clickSelector, typeText} from '../shared/Navigate'
 import {verifyUrl, verifyPageTitle} from '../shared/Assertions'
 import LeftNavigation from '../pages/LeftNavigation';
+import { t } from 'testcafe';
 
 const header = new Header();
 const search = new Search();
@@ -26,13 +27,28 @@ test('test', async () =>{
     await leftNavigation.toggleByTitle('Protocols');
     await leftNavigation.verifyList('Protocols',ProtocolList);
 })
-//to do finish search tests 
-test('Verify Search functionality', async () =>{
+
+test('Verify Search box basics', async () =>{
+    await clickSelector(header.navBarApi);
+    await clickSelector(header.search)
+    await search.verifyHeader()
+    await search.verifyBody()
+    await search.verifyFooterLogo()
+    await search.verifyFooterCommands()
+})
+
+test.only('Verify Search functionality', async () =>{
     await clickSelector(header.navBarApi);
     await clickSelector(header.search)
     await typeText(search.input, 'click')
-    await typeText(search.input, 'asdd')
+    await clickSelector(header.search)
+    await typeText(search.input, 'call')
+    await clickSelector(header.search)
+    await search.verifyRecentSearchesContains('call', 'click')
     await typeText(search.input, 'ddddd')
+    await search.verifyNoResults('ddddd')
+        // await search.clearSearch();
+
     /*
 search for something then verify it remains in Recent search (how many Recent searches)
 add something to favourites 
@@ -47,9 +63,6 @@ remove all searches
 
     if time verify when searching some text that it appears in specific categoties
     */
-    await search.clearSearch();
 
-    await leftNavigation.toggleByTitle('element');
-    await leftNavigation.toggleByTitle('Protocols');
-    await leftNavigation.verifyList('Protocols',ProtocolList);
+
 })

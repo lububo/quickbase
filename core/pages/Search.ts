@@ -7,10 +7,14 @@ export default class Search{
     readonly favourite: Selector;
     readonly deleteFromRecent: Selector;
     readonly deleteFromFavouritea: Selector;
-    readonly favouritesList: Selector;
-    readonly recentList: Selector;
+    readonly favouritesSearchList: Selector;
+    readonly recentSearchList: Selector;
+    readonly header: Selector;
+    readonly body: Selector;
     readonly footer: Selector;
-    readonly resetSearch: Selector;
+    readonly footerCommands: Selector;
+    readonly clearSearchInput: Selector;
+    readonly noResultsPage: Selector;
 
     constructor(){
         this.input = Selector('#docsearch-input')
@@ -18,10 +22,26 @@ export default class Search{
         this.favourite = Selector('.DocSearch-Hit-action-button[title="Save this search"]')
         this.deleteFromRecent = Selector('.DocSearch-Hit-action-button[title="Remove this search from history"]')
         this.deleteFromFavouritea = Selector('.DocSearch-Hit-action-button[title="Remove this search from favorites"]')
-        this.favouritesList = Selector('#docsearch-list').withExactText('Favourites')
-        this.recentList = Selector('#docsearch-list').withExactText('Recent')
+        this.favouritesSearchList = Selector('.DocSearch-Hit-source').withExactText('Favourites').nextSibling('#docsearch-list')
+        this.recentSearchList = Selector('.DocSearch-Hit-source').withExactText('Recent').nextSibling('#docsearch-list')
+        this.header = Selector('.DocSearch-SearchBar')
+        this.body = Selector('.DocSearch-StartScreen')
         this.footer = Selector('.DocSearch-Footer')
-        this.resetSearch = Selector('.DocSearch-Reset')
+        this.footerCommands = this.footer.child('ul.DocSearch-Commands');
+        this.clearSearchInput = Selector('.DocSearch-Reset')
+        this.noResultsPage = Selector('.DocSearch-NoResults')
+    }
+
+    verifyHeader(){
+        return t
+        .expect(this.header.find('#docsearch-label').exists).ok()
+        .expect(this.header.find('input.DocSearch-Input').exists).ok()
+        .expect(this.header.find('input#docsearch-input').getAttribute('placeholder')).eql('Search docs')
+    }
+
+    verifyBody(){
+        return t
+        .expect(this.body.child('p.DocSearch-Help').textContent).eql('No recent searches')
     }
 
     verifyFooterLogo(){
@@ -31,12 +51,39 @@ export default class Search{
     }
 
     verifyFooterCommands(){
+        const command1 = this.footerCommands.child('li').nth(0)
+        const command2 = this.footerCommands.child('li').nth(1)
+        const command3 = this.footerCommands.child('li').nth(2)
+        return t
+                .expect(command1.child('.DocSearch-Commands-Key').filterVisible().exists).ok()
+                .expect(command1.child('.DocSearch-Label').textContent).eql('to select')
+                .expect(command2.child('.DocSearch-Commands-Key').nth(0).filterVisible().exists).ok()
+                .expect(command2.child('.DocSearch-Commands-Key').nth(1).filterVisible().exists).ok()
+                .expect(command2.child('.DocSearch-Label').textContent).eql('to navigate')
+                .expect(command3.child('.DocSearch-Commands-Key').filterVisible().exists).ok()
+                .expect(command3.child('.DocSearch-Label').textContent).eql('to close')
 
     }
 
-    clearSearch(){
-        clickSelector(this.resetSearch)
+    verifyNoResults(searchedElement: string){
+        return t
+                .expect(this.noResultsPage.child('.DocSearch-Screen-Icon').filterVisible().exists).ok()
+                .expect(this.noResultsPage.child('.DocSearch-Title').textContent).eql(`No results for "${searchedElement}"`)
+                .expect(this.noResultsPage.find('.DocSearch-NoResults-Prefill-List p').nth(0).textContent).eql(`Try searching for:`)
+                .expect(this.noResultsPage.child('.DocSearch-Help').filterVisible().exists).ok()
+                .expect(this.noResultsPage.child('p.DocSearch-Help').textContent).eql(`Believe this query should return results? Let us know.`)   
     }
+
+    async clearSearch(){
+       await clickSelector(this.clearSearchInput)
+    }
+
+    async verifyRecentSearchesContains(...elements: string[]){
+        const currentSearchElements = await this.recentSearchList.textContent
+        elements.forEach(async element => {
+            await t.expect(currentSearchElements).contains(element, `No such element ${element}`)
+        })
+   }
 
     async removeAllSearchesFrom(selector: Selector){
         const countSearches = await selector.count
