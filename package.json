@@ -4,8 +4,8 @@
     "description": "Quickbase demo",
     "main": "index.js",
     "scripts": {
-        "test": "testcafe chrome core\tests",
-        "testh": "testcafe chrome:headless core\tests"
+        "test": "testcafe chrome core/tests/",
+        "testh": "testcafe chrome:headless core/tests/"
     },
     "author": "Lyubomir Boradzhiev",
     "license": "ISC",
