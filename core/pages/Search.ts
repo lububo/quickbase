@@ -1,5 +1,5 @@
 import { Selector, t } from "testcafe";
-import {clickSelector} from "../shared/Navigate";
+import {click} from "../shared/Navigate";
 
 export default class Search{
     readonly input: Selector;
@@ -111,7 +111,7 @@ export default class Search{
    }
 
     async clearSearch(){
-       await clickSelector(this.clearSearchInput)
+       await click(this.clearSearchInput)
     }
 
     async removeAllSearchesFrom(selector: Selector){

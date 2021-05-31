@@ -1,6 +1,6 @@
 import { ClientFunction, t } from "testcafe"
 
-export const clickSelector = (selector: Selector) => {
+export const click = (selector: Selector) => {
     return t.click(selector)
 }
 

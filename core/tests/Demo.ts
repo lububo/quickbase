@@ -16,9 +16,9 @@ fixture `Quickbase Demo`
 .page('http://webdriver.io')
 
 test('test', async () =>{
-    await utils.clickSelector(header.navBarApi);
+    await utils.click(header.navBarApi);
     await utils.verifyUrl('https://webdriver.io/docs/api')
-    await utils.clickSelector(header.search)
+    await utils.click(header.search)
     await utils.typeText(search.input, 'click')
     await utils.verifyUrl('https://webdriver.io/docs/api/element/click/')
     await utils.verifyPageTitle('click')
@@ -28,7 +28,7 @@ test('test', async () =>{
 });
 
 test('Verify Search box basics', async () =>{
-    await utils.clickSelector(header.search)
+    await utils.click(header.search)
     await search.verifyHeader()
     await search.verifyEmptyBody()
     await search.verifyFooterLogo()
@@ -36,12 +36,12 @@ test('Verify Search box basics', async () =>{
 });
 
 test('Verify Search functionality', async () =>{
-    await utils.clickSelector(header.search)
+    await utils.click(header.search)
     await utils.typeText(search.input, 'click')
-    await utils.clickSelector(header.search)
+    await utils.click(header.search)
     await search.verifySearchHitButtons();
     await utils.typeText(search.input, 'call')
-    await utils.clickSelector(header.search)
+    await utils.click(header.search)
     await search.verifyRecentSearchesContains('call', 'click')
     await utils.typeText(search.input, 'noNoResults')
     await search.verifyNoResults('noNoResults')
